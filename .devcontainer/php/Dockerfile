@@ -39,17 +39,26 @@ ADD 90-xdebug.ini /etc/php/7.1/fpm/conf.d/90-xdebug.ini
 RUN npm install -g n \
     && n 8
 
-RUN adduser --home /home/developer --shell /bin/bash --uid 1000 --disabled-password -q developer
-RUN touch /var/log/php-fpm.log
+RUN adduser --home /home/developer \
+   --shell /bin/bash \
+   --uid 1000 \
+   --disabled-password \
+   -q developer
 
+ENV BASEDIR=/code
 
-WORKDIR /app
-RUN mkdir -p /app/vendor \
-    && mkdir -p /app/node_modules \
-    && mkdir -p /app/app/cache \
-    && chown -R developer:developer /app \
-    && chown -R developer:developer /var/log/php-fpm.log
+WORKDIR ${BASEDIR}
+RUN mkdir -p ${BASEDIR}/vendor \
+   && mkdir -p ${BASEDIR}/node_modules \
+   && mkdir -p ${BASEDIR}/app/cache \
+   && chown -R developer:developer ${BASEDIR} \
+   && chown -R developer ${BASEDIR}/app \
+   && touch /var/log/php-fpm.log \
+   && chown -R developer:developer /var/log/php-fpm.log
 
 
 ADD php-fpm.conf /etc/php/7.1/fpm/pool.d/php-fpm.conf
+
+USER developer
+
 ENTRYPOINT [ "/usr/sbin/php-fpm7.1", "--nodaemonize", "--force-stderr", "--fpm-config", "/etc/php/7.1/fpm/pool.d/php-fpm.conf" ]

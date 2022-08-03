@@ -4,7 +4,7 @@
   "dockerComposeFile": "docker-compose.yml",
   "forwardPorts": [9200, 3600, 80, 443],
   "remoteUser": "developer",
-  "workspaceFolder": "/app",
+  "workspaceFolder": "/code",
   "settings": {
     "php.executablePath": "/usr/bin/php7.4",
     "php.suggest.basic": false

@@ -8,7 +8,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./../:/app/
+      - ./../:/code/
     links:
       - php
   php:
@@ -16,11 +16,11 @@ services:
       context: php
       dockerfile: ./Dockerfile
     volumes:
-      - ./../:/app/
+      - ./../:/code/
       - ~/.ssh/:/home/developer/.ssh/
-      - cache_vol:/app/app/cache
-      - vendor_vol:/app/vendor
-      - node_modules_vol:/app/node_modules
+      - cache_vol:/code/app/cache
+      - vendor_vol:/code/vendor
+      - node_modules_vol:/code/node_modules
     links:
       - db
       - es
