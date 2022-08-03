@@ -1,0 +1,42 @@
+services:
+  httpd:
+    hostname: edirectory.tld
+    build:
+      context: httpd
+      dockerfile: ./Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./../:/app/
+    links:
+      - php
+  php:
+    build:
+      context: php
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./../:/app/
+      - ~/.ssh/:/home/developer/.ssh/
+      - cache_vol:/app/app/cache
+      - vendor_vol:/app/vendor
+      - node_modules_vol:/app/node_modules
+    links:
+      - db
+      - es
+  db:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=arca7
+    volumes:
+      - mysql_vol:/var/lib/mysql/
+  es:
+    image: arcasolutions/elasticsearch:2.3.4-single-node
+    volumes:
+      - es_vol:/usr/share/elasticsearch/data/
+volumes:  
+  node_modules_vol: {}
+  vendor_vol: {}
+  mysql_vol: {}
+  es_vol: {}
+  cache_vol: {}

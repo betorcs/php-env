@@ -1,0 +1,24 @@
+{
+  "name": "edirectory_docker",
+  "service": "php",
+  "dockerComposeFile": "docker-compose.yml",
+  "forwardPorts": [9200, 3600, 80, 443],
+  "remoteUser": "developer",
+  "workspaceFolder": "/app",
+  "settings": {
+    "php.executablePath": "/usr/bin/php7.4",
+    "php.suggest.basic": false
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "xdebug.php-pack", 
+        "phproberto.vscode-php-getters-setters",
+        "bmewburn.vscode-intelephense-client",
+        "zobo.php-intellisense",
+        "TheNouillet.symfony-vscode",
+        "mblode.twig-language-2"
+      ]
+    }
+  }
+}
